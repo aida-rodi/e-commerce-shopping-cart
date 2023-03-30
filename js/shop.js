@@ -78,9 +78,11 @@ function buy(id) {
         if (id === product.id) {
             cartList.push(product)
             console.log(cartList)
+            calculateTotal(cartList)
             return
         }
     }
+    
 }
 
 // Exercise 2
@@ -90,8 +92,10 @@ function cleanCart() {
 }
 
 // Exercise 3
-function calculateTotal() {
-    // Calculate total price of the cart using the "cartList" array
+function calculateTotal(cartList) {
+    const product = cartList[cartList.length-1]
+    total = total + product.price
+    console.log(total)
 }
 
 // Exercise 4
