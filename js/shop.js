@@ -64,7 +64,7 @@ var products = [
     }
 ]
 // Array with products (objects) added directly with push(). Products in this array are repeated.
-var cartList = [];
+let cartList = [];
 
 // Improved version of cartList. Cart is an array of products (objects), but each one has a quantity field to define its quantity, so these products are not repeated.
 var cart = [];
@@ -85,7 +85,8 @@ function buy(id) {
 
 // Exercise 2
 function cleanCart() {
-
+    cartList = []
+    console.log(cartList)
 }
 
 // Exercise 3
