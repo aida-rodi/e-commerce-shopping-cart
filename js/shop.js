@@ -77,6 +77,7 @@ function buy(id) {
         const product = products[i]
         if (id === product.id) {
             cartList.push(product)
+            console.log('cartList:')
             console.log(cartList)
             calculateTotal(cartList)
             return
@@ -89,7 +90,9 @@ function cleanCart() {
     cartList = []
     cart = []
     total = 0
+    console.log('empty cartList:')
     console.log(cartList)
+    console.log('empty cart:')
     console.log(cart)
 }
 
@@ -97,6 +100,7 @@ function cleanCart() {
 function calculateTotal(cartList) {
     const product = cartList[cartList.length-1]
     total = total + product.price
+    console.log('total price:')
     console.log(total)
 }
 
@@ -116,13 +120,31 @@ function generateCart() {
         }
         product.quantity = 1
         cart.push(product)
+        console.log('cart:')
         console.log(cart)
     }
+
+    applyPromotionsCart()
 }
 
 // Exercise 5
 function applyPromotionsCart() {
-    // Apply promotions to each item in the array "cart"
+    const OIL_PROMO_PRICE = 10
+    const CUPCAKE_PROMO_PRICE = 2/3
+
+    cartLoop:
+    for (let i = 0; i < cart.length; i++) {
+        const product = cart[i]
+        if (product.id === 1 && product.quantity >= 3) {
+            product.subtotalWithDiscount = product.quantity * OIL_PROMO_PRICE
+            continue cartLoop
+        }
+        if (product.id === 3 && product.quantity >= 10) {
+            product.subtotalWithDiscount = product.quantity * product.price * CUPCAKE_PROMO_PRICE
+        }
+    }
+    console.log('Cart with discount:')
+    console.log(cart)
 }
 
 // Exercise 6
