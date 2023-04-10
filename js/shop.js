@@ -71,6 +71,8 @@ let cart = [];
 
 let total = 0;
 
+let productCount = document.querySelector(".badge");
+
 // Exercise 1
 function buy(id) {
     for (let i = 0; i < products.length; i++) {
@@ -80,9 +82,10 @@ function buy(id) {
             console.log('cartList:')
             console.log(cartList)
             calculateTotal(cartList)
-            return
+            break
         }
     }
+    productCount.innerText = cartList.length
 }
 
 // Exercise 2
@@ -90,6 +93,7 @@ function cleanCart() {
     cartList = []
     cart = []
     total = 0
+    productCount.innerText = 0
     console.log('empty cartList:')
     console.log(cartList)
     console.log('empty cart:')
@@ -120,10 +124,10 @@ function generateCart() {
         }
         product.quantity = 1
         cart.push(product)
-        console.log('cart:')
-        console.log(cart)
     }
 
+    console.log('cart:')
+    console.log(cart)
     applyPromotionsCart()
 }
 
@@ -149,7 +153,15 @@ function applyPromotionsCart() {
 
 // Exercise 6
 function printCart() {
-    // Fill the shopping cart modal manipulating the shopping cart dom
+    const formattedCart = cart.map((product) => {
+        return `
+        <tr>
+            <th scope="row">${product.name}</th>
+            <td>${product.price}</td>
+            <td>${product.quantity}</td>
+            <td>${product.subtotal}</td>
+        </tr>`;
+        });    
 }
 
 
