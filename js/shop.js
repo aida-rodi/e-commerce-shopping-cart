@@ -107,11 +107,6 @@ function calculateTotal() {
         total = total + cartProduct.subtotalWithDiscount
     };
     console.log(total)
-
-    /* const product = cartList[cartList.length-1]
-    total = total + product.price
-    console.log('total price:')
-    console.log(total) */
 }
 
 // Exercise 4
