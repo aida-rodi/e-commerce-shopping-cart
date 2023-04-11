@@ -1,8 +1,8 @@
 // If you have time, you can move this variable "products" to a json or js file and load the data in this js. It will look more professional
-var products = [
+const products = [
    {
         id: 1,
-        name: 'cooking oil',
+        name: 'Cooking oil',
         price: 10.5,
         type: 'grocery',
         offer: {
@@ -81,7 +81,6 @@ function buy(id) {
             cartList.push(product)
             console.log('cartList:')
             console.log(cartList)
-            calculateTotal(cartList)
             break
         }
     }
@@ -94,6 +93,7 @@ function cleanCart() {
     cart = []
     total = 0
     productCount.innerText = 0
+    printCart()
     console.log('empty cartList:')
     console.log(cartList)
     console.log('empty cart:')
@@ -101,11 +101,17 @@ function cleanCart() {
 }
 
 // Exercise 3
-function calculateTotal(cartList) {
-    const product = cartList[cartList.length-1]
+function calculateTotal() {
+    for (let i = 0; i < cart.length; i++) {
+        const cartProduct = cart[i]
+        total = total + cartProduct.subtotalWithDiscount
+    };
+    console.log(total)
+
+    /* const product = cartList[cartList.length-1]
     total = total + product.price
     console.log('total price:')
-    console.log(total)
+    console.log(total) */
 }
 
 // Exercise 4
@@ -116,19 +122,23 @@ function generateCart() {
 
         
         for (let j = 0; j < cart.length; j++) {
-            if (product.id === cart[j].id) {
-                product.quantity = product.quantity +1
-                product.subtotal = product.price * product.quantity
+            const cartProduct = cart[j]
+
+            if (product.id === cartProduct.id) {
+                cartProduct.quantity = cartProduct.quantity +1
+                cartProduct.subtotal = cartProduct.price * cartProduct.quantity
+                cartProduct.subtotalWithDiscount = cartProduct.price * cartProduct.quantity
                 continue cartListLoop
             }
         }
         product.quantity = 1
-        cart.push(product)
+        product.subtotal = product.price * product.quantity
+        product.subtotalWithDiscount = product.price * product.quantity
+        cart.push({...product})
     }
 
     console.log('cart:')
     console.log(cart)
-    applyPromotionsCart()
 }
 
 // Exercise 5
@@ -145,23 +155,35 @@ function applyPromotionsCart() {
         }
         if (product.id === 3 && product.quantity >= 10) {
             product.subtotalWithDiscount = product.quantity * product.price * CUPCAKE_PROMO_PRICE
+            continue cartLoop
         }
+        
     }
+
     console.log('Cart with discount:')
     console.log(cart)
 }
 
 // Exercise 6
 function printCart() {
+    cart = []
+    generateCart()
+    applyPromotionsCart()
+    total = 0
+    calculateTotal()
+
     const formattedCart = cart.map((product) => {
         return `
         <tr>
             <th scope="row">${product.name}</th>
-            <td>${product.price}</td>
+            <td>$${product.price}</td>
             <td>${product.quantity}</td>
-            <td>${product.subtotal}</td>
+            <td>$${product.subtotalWithDiscount.toFixed(2)}</td>
         </tr>`;
-        });    
+    });
+
+    document.getElementById("cart_list").innerHTML = formattedCart.join('')
+    document.getElementById("total_price").innerHTML = total.toFixed(2)
 }
 
 
