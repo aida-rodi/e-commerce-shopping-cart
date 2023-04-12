@@ -181,9 +181,6 @@ function printCart() {
     document.getElementById("total_price").innerHTML = total.toFixed(2)
 }
 
-// Exercise 7
-
-
 // ** Nivell II **
 
 // Exercise 8
