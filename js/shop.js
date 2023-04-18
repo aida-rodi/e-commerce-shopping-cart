@@ -106,6 +106,7 @@ function calculateTotal() {
         const cartProduct = cart[i]
         total = total + cartProduct.subtotalWithDiscount
     };
+    console.log('total:')
     console.log(total)
 }
 
@@ -161,8 +162,6 @@ function applyPromotionsCart() {
 
 // Exercise 6
 function printCart() {
-    cart = []
-    generateCart()
     applyPromotionsCart()
     total = 0
     calculateTotal()
@@ -185,15 +184,41 @@ function printCart() {
 
 // Exercise 8
 function addToCart(id) {
-    // Refactor previous code in order to simplify it 
-    // 1. Loop for to the array products to get the item to add to cart
-    // 2. Add found product to the cart array or update its quantity in case it has been added previously.
+    
+    for (let i = 0; i < products.length; i++) {
+        const currentProduct = products[i]
+
+        if (id === currentProduct.id) {
+           const product = {...currentProduct}
+
+            for (let j = 0; j < cart.length; j++) {
+                const cartProduct = cart[j]
+    
+                if (product.id === cartProduct.id) {
+                    cartProduct.quantity = cartProduct.quantity +1
+                    cartProduct.subtotal = cartProduct.price * cartProduct.quantity
+                    cartProduct.subtotalWithDiscount = cartProduct.price * cartProduct.quantity
+                    productCount.innerText = cart.length
+                    console.log('cart:')
+                    console.log(cart)
+                    return
+                }
+            }
+            product.quantity = 1
+            product.subtotal = product.price * product.quantity
+            product.subtotalWithDiscount = product.price * product.quantity
+            cart.push(product)
+            productCount.innerText = cart.length
+            console.log('cart:')
+            console.log(cart)
+            break
+        }
+    }
 }
 
 // Exercise 9
 function removeFromCart(id) {
-    // 1. Loop for to the array products to get the item to add to cart
-    // 2. Add found product to the cartList array
+    
 }
 
 function open_modal(){
